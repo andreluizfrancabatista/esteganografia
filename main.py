@@ -55,8 +55,10 @@ def extract_text_from_image(image_path):
     # Encontrar delimitador de fim
     end_index = binary_text.find('1111111111111110')
     if end_index != -1:
-        binary_text = binary_text[:end_index]
-        return bin_to_str(binary_text)
+        message_bits = binary_text[:end_index]
+        if len(message_bits) % 8 != 0:
+            return "Erro: mensagem truncada ou delimitador mal posicionado."
+        return bin_to_str(message_bits)
     else:
         return "Delimitador de fim não encontrado."
 
